@@ -33,7 +33,6 @@ def calculate_features(img):
 
     feat = net.blobs['fc7'].data[4]
     feat = np.squeeze(feat)
-
     return feat
 
 # start capture from webcam
@@ -42,20 +41,27 @@ cap = cv2.VideoCapture(-1)
 
 # training
 
-stepsize = 200
+stepsize = 20
 
+images = []
 inputs = []
 outputs = []
 
 broken = False
 for x in xrange(0,512,stepsize):
     for y in xrange(0,512,stepsize):
+
         ret, frame = cap.read()
 
+        images.append(frame)
+
         # calculate features
+        '''
         feat = calculate_features(frame)
         inputs.append(feat)
+        '''
         outputs.append([x,y])
+
 
         # show display
         resized = cv2.resize(frame, (0,0), fx=.25, fy=.25)
@@ -72,11 +78,33 @@ for x in xrange(0,512,stepsize):
     if broken:
         break
 
+for i in xrange(5):
+    feat = calculate_features(images[i*50])
+    inputs.append(feat)
+    plt.subplot(5,1,i)
+    plt.imshow(images[i*50])
+plt.show()
+
+inputs_matrix = np.zeros((len(inputs), 4096))
+for ind, input in enumerate(inputs):
+    inputs_matrix[ind,:] = input
+
+print inputs_matrix.size
+
+mean_vector = np.mean(inputs_matrix,axis=0)
+
+plt.plot(mean_vector)
+plt.show()
+
 # show plots of features
 
-for i in xrange(5):
+
+
+for i, feat in enumerate(inputs):
+    feat = np.subtract(feat,mean_vector)
+
     plt.subplot(5,1,i)
-    plt.plot(inputs[i])
+    plt.plot(feat)
 plt.show()
 
 # create classifier
