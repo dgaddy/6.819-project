@@ -27,7 +27,19 @@ def calculate_features(img):
     feat = np.squeeze(feat)
     return feat
 
-net.predict([caffe.io.load_image('/home/david/PycharmProjects/819 project/data/hand_0_0.png')])
+img = cv2.imread('/home/david/PycharmProjects/819 project/data/hand_0_0.png')
+img = img[:,:,[2,1,0]]
+img = img * 1.0/255
+img_caffe = caffe.io.load_image('/home/david/PycharmProjects/819 project/data/hand_0_0.png')
+print np.max(img)
+print np.max(img_caffe)
+
+plt.imshow(img)
+plt.show()
+plt.imshow(img_caffe)
+plt.show()
+
+net.predict([img])
 feat = net.blobs['fc7'].data[4]
 
 plt.plot(feat.flat)
