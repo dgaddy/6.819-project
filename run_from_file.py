@@ -27,20 +27,36 @@ def calculate_features(img):
     feat = np.squeeze(feat)
     return feat
 
+inputs = []
+outputs = []
+stepsize = 20
+
+test = [(100,100),(100,200),(200,200)]
+
+for x in xrange(0,512,stepsize):
+    for y in xrange(0,512,stepsize):
+        if (x,y) in test:
+            continue
+
+        image = caffe.io.load_image('/home/david/PycharmProjects/819 project/data/hand_%i_%i.png' % (x,y))
+
+        feat = calculate_features(image)
+        inputs.append(feat)
+        outputs.append((x,y))
+
+neigh = KNeighborsClassifier(n_neighbors=3, weights='distance')
+neigh.fit(np.vstack(inputs), np.vstack(outputs))
+
+for (x,y) in test:
+    image = caffe.io.load_image('/home/david/PycharmProjects/819 project/data/hand_%i_%i.png' % (x,y))
+    feat = calculate_features(image)
+    print (x,y)
+    print neigh.kneighbors(feat)
+    location = np.squeeze(neigh.predict(feat))
+    print location
+'''
+to make images loaded with opencv work, we have to do this:
 img = cv2.imread('/home/david/PycharmProjects/819 project/data/hand_0_0.png')
 img = img[:,:,[2,1,0]]
 img = img * 1.0/255
-img_caffe = caffe.io.load_image('/home/david/PycharmProjects/819 project/data/hand_0_0.png')
-print np.max(img)
-print np.max(img_caffe)
-
-plt.imshow(img)
-plt.show()
-plt.imshow(img_caffe)
-plt.show()
-
-net.predict([img])
-feat = net.blobs['fc7'].data[4]
-
-plt.plot(feat.flat)
-plt.show()
+'''
