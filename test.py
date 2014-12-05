@@ -6,16 +6,26 @@ from sklearn.neighbors import KNeighborsClassifier
 import cnn
 
 (inputs, outputs) = pickle.load(open('features.p', 'rb'))
+stack_inputs = np.vstack(inputs)
+
+mean_vector = np.mean(stack_inputs,axis=0)
+
+stack_inputs = stack_inputs - mean_vector
 
 neigh = KNeighborsClassifier(n_neighbors=3, weights='distance')
-neigh.fit(np.vstack(inputs), np.vstack(outputs))
+neigh.fit(stack_inputs, np.vstack(outputs))
 
 cap = cv2.VideoCapture(-1)
 
+
+ret, frame = cap.read()
+
+background = cnn.calculate_features(frame)
 while True:
     ret, frame = cap.read()
 
     feat = cnn.calculate_features(frame)
+    feat = feat - background
 
     print neigh.kneighbors(feat)
     location = np.squeeze(neigh.predict(feat))

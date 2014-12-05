@@ -23,6 +23,6 @@ def calculate_features(img):
 
     scores = net.predict([img])
 
-    feat = net.blobs['fc7'].data[4]
+    feat = np.copy(net.blobs['fc7'].data[4])
     feat = np.squeeze(feat)
     return feat
