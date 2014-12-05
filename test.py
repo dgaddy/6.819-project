@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 import cv2
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import RidgeCV
 
 import cnn
 
@@ -14,6 +15,9 @@ stack_inputs = stack_inputs - mean_vector
 
 neigh = KNeighborsClassifier(n_neighbors=3, weights='distance')
 neigh.fit(stack_inputs, np.vstack(outputs))
+
+regression = RidgeCV()
+regression.fit(stack_inputs, np.vstack(outputs))
 
 cap = cv2.VideoCapture(-1)
 
@@ -32,6 +36,11 @@ while True:
     print location
     x = location[0]
     y = location[1]
+
+    location = regression.predict(feat)
+    print location
+    x = int(location[0])
+    y = int(location[1])
 
     # show display
     resized = cv2.resize(frame, (0,0), fx=.25, fy=.25)

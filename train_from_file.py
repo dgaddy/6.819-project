@@ -10,17 +10,18 @@ inputs = []
 outputs = []
 stepsize = 20
 
-for x in xrange(0,512,stepsize):
-    print x
-    for y in xrange(0,512,stepsize):
+for file_start in ['hand', 'hand1', 'hand2']:
+    for x in xrange(0,512,stepsize):
+        print x
+        for y in xrange(0,512,stepsize):
 
-        image = cnn.caffe.io.load_image('/home/david/PycharmProjects/819 project/data/hand_%i_%i.png' % (x,y))
+            image = cnn.caffe.io.load_image('/home/david/PycharmProjects/819 project/data/%s_%i_%i.png' % (file_start, x,y))
 
-        feat = cnn.calculate_features(image)
-        inputs.append(feat)
-        outputs.append((x,y))
+            feat = cnn.calculate_features(image)
+            inputs.append(feat)
+            outputs.append((x,y))
 
-pickle.dump((inputs, outputs), open('features.p', 'wb'))
+pickle.dump((inputs, outputs), open('features_clean.p', 'wb'))
 
 print 'done training'
 
