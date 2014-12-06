@@ -8,14 +8,14 @@ import pickle
 
 inputs = []
 outputs = []
-stepsize = 20
+stepsize = 40
 
-for file_start in ['hand', 'hand1', 'hand2']:
+for file_start in ['hand', 'hand2', 'hand3']:
     for x in xrange(0,512,stepsize):
         print x
         for y in xrange(0,512,stepsize):
 
-            image = cnn.caffe.io.load_image('/home/david/PycharmProjects/819 project/data/%s_%i_%i.png' % (file_start, x,y))
+            image = cnn.caffe.io.load_image('/home/david/PycharmProjects/819 project/clean_data/%s_%i_%i.png' % (file_start, x,y))
 
             feat = cnn.calculate_features(image)
             inputs.append(feat)

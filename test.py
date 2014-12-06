@@ -6,7 +6,7 @@ from sklearn.linear_model import RidgeCV
 
 import cnn
 
-(inputs, outputs) = pickle.load(open('features.p', 'rb'))
+(inputs, outputs) = pickle.load(open('features_clean.p', 'rb'))
 stack_inputs = np.vstack(inputs)
 
 mean_vector = np.mean(stack_inputs,axis=0)
@@ -31,14 +31,14 @@ while True:
     feat = cnn.calculate_features(frame)
     feat = feat - background
 
-    print neigh.kneighbors(feat)
+    # print neigh.kneighbors(feat)
     location = np.squeeze(neigh.predict(feat))
-    print location
+    print 'neighbors ', location
     x = location[0]
     y = location[1]
 
     location = regression.predict(feat)
-    print location
+    print 'regression ', location
     x = int(location[0])
     y = int(location[1])
 
