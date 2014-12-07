@@ -10,15 +10,21 @@ import hog_project
 (hog_inputs, hog_outputs) = pickle.load(open('hog_features_clean.p', 'rb'))
 n = len(inputs)
 train = 2*n/3
-third = n/3
-train_inputs = inputs[third:]
-train_outputs = outputs[third:]
-hog_train_inputs = hog_inputs[third:]
-hog_train_outputs = hog_outputs[third:]
-test_inputs = inputs[:third]
-test_outputs = outputs[:third]
-hog_test_inputs = hog_inputs[:third]
-hog_test_outputs = hog_outputs[:third]
+third = n/6
+test_slice_bounds = (0*n/6, 1*n/6)
+
+train_slice_1 = slice(None, test_slice_bounds[0]) if test_slice_bounds[0] is not None else slice (0, 0)
+test_slice = slice(test_slice_bounds[0], test_slice_bounds[1])
+train_slice_2 = slice(test_slice_bounds[1], None) if test_slice_bounds[1] is not None else slice(0, 0)
+
+train_inputs = inputs[train_slice_1] + inputs[train_slice_2]
+train_outputs = outputs[train_slice_1] + outputs[train_slice_2]
+hog_train_inputs = hog_inputs[train_slice_1] + hog_inputs[train_slice_2]
+hog_train_outputs = hog_outputs[train_slice_1] + hog_outputs[train_slice_2]
+test_inputs = inputs[test_slice]
+test_outputs = outputs[test_slice]
+hog_test_inputs = hog_inputs[test_slice]
+hog_test_outputs = hog_outputs[test_slice]
 
 stack_inputs = np.vstack(train_inputs)
 stack_outputs = np.vstack(train_outputs)

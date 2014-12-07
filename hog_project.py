@@ -48,7 +48,7 @@ def load_hog():
     return hog_list
 
 def load_hog_2():
-    directory = 'clean_data'
+    directory = 'clean_data_2'
     hog_list = []
     coordinates = []
     for filepath in os.listdir(os.path.join(os.getcwd(), directory)):
@@ -94,7 +94,7 @@ def main():
 
     # for x in xrange(0,512,stepsize):
     #     for y in xrange(0,512,stepsize):
-    hog_list, coords = load_hog_2()
+    hog_list, coords = pickle.load(open('hog_features_clean.p', 'rb'))#load_hog_2()
     neigh = KNeighborsClassifier(n_neighbors=5, weights='distance')
     print np.vstack(hog_list).shape
     print np.vstack(coords)

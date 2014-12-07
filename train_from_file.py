@@ -8,22 +8,23 @@ import pickle
 
 inputs = []
 outputs = []
-stepsize = 40
+stepsize = 80#40
 
-for file_start in ['hand', 'hand2', 'hand3']:
-    for x in xrange(0,512,stepsize):
-        print x
-        for y in xrange(0,512,stepsize):
+# for file_start in ['hand', 'hand2', 'hand3']:
+try:
+    for file_start in ['hand' + str(i) for i in xrange(6)]:
+        for x in xrange(0,512,stepsize):
+            print x
+            for y in xrange(0,512,stepsize):
 
-            image = cnn.caffe.io.load_image('clean_data/%s_%i_%i.png' % (file_start, x,y))
+                image = cnn.caffe.io.load_image('clean_data_2/%s_%i_%i.png' % (file_start, x,y))
 
-            feat = cnn.calculate_features(image)
-            inputs.append(feat)
-            outputs.append((x,y))
-
-pickle.dump((inputs, outputs), open('features_clean.p', 'wb'))
-
-print 'done training'
+                feat = cnn.calculate_features(image)
+                inputs.append(feat)
+                outputs.append((x,y))
+finally:
+    pickle.dump((inputs, outputs), open('features_clean.p', 'wb'))
+    print 'done training'
 
 '''
 to make images loaded with opencv work, we have to do this:
