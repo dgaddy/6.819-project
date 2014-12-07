@@ -15,7 +15,7 @@ for file_start in ['hand', 'hand2', 'hand3']:
         print x
         for y in xrange(0,512,stepsize):
 
-            image = cnn.caffe.io.load_image('/home/david/PycharmProjects/819 project/clean_data/%s_%i_%i.png' % (file_start, x,y))
+            image = cnn.caffe.io.load_image('clean_data/%s_%i_%i.png' % (file_start, x,y))
 
             feat = cnn.calculate_features(image)
             inputs.append(feat)

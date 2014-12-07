@@ -38,7 +38,7 @@ for x in xrange(0,512,stepsize):
 
     for y in xrange(0,512,stepsize):
         ret, frame = cap.read()
-        cv2.imwrite('clean_data/hand3_%d_%d.png' % (x,y), frame)
+        cv2.imwrite('clean_data_2/hand0_%d_%d.png' % (x,y), frame)
 
         # show display
         resized = cv2.resize(frame, (0,0), fx=.25, fy=.25)
