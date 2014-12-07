@@ -135,6 +135,10 @@ def main():
 
         frame = cv2.flip(frame, 1)
         cv2.circle(frame,tuple(int(n) for n in location),10,(255,0,0),-1)
+        fw = frame.shape[0]
+        fh = frame.shape[1]
+        cv2.line(frame, (0, fw/2), (fh, fw/2), (0, 0, 0))
+        cv2.line(frame, (fh/2, 0), (fh/2, fw), (0, 0, 0))
         cv2.imshow('frame', frame)
 
         if (cv2.waitKey(30) & 0xFF) == ord('q'):
