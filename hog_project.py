@@ -3,7 +3,7 @@ import cv2
 import os, math
 import pickle
 import matplotlib.pyplot as plt
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import RidgeCV
 
 class Smoother:
     smoothing = 0.25
@@ -122,27 +122,21 @@ def hogPicture(w,bs):
 def main():
     cap = cv2.VideoCapture(-1)
 
-    # for x in xrange(0,512,stepsize):
-    #     for y in xrange(0,512,stepsize):
     smoother = Smoother()
     hog_list, coords = pickle.load(open('hog_features_clean.p', 'rb'))#load_hog_2()
-    neigh = KNeighborsClassifier(n_neighbors=5, weights='distance')
-    print np.vstack(hog_list).shape
-    print np.vstack(coords)
-    neigh.fit(np.vstack(hog_list), np.vstack(coords))
+    reg = RidgeCV()
+    reg.fit(np.vstack(hog_list), np.vstack(coords))
     while True:
         ret, frame = cap.read()
 
         frame_hog = hog(frame, asHlist=False)
-        location = smoother.add(np.squeeze(neigh.predict(np.hstack(frame_hog.reshape(-1,9)))))
+        location = smoother.add(np.squeeze(reg.predict(np.hstack(frame_hog.reshape(-1,9)))))
         print location
 
         frame = cv2.flip(frame, 1)
         cv2.circle(frame,tuple(int(n) for n in location),10,(255,0,0),-1)
         cv2.imshow('frame', frame)
 
-        #print closest(frame_hog, hog_list)
-        #cv2.imshow('frame',frame)
         if (cv2.waitKey(30) & 0xFF) == ord('q'):
             break
 
@@ -153,7 +147,7 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    loaded_hog = load_hog_2()
-    pickle.dump(loaded_hog, open('hog_features_clean.p', 'wb'))
-    print "Hog inputs pickled"
-    # main()
+    # loaded_hog = load_hog_2()
+    # pickle.dump(loaded_hog, open('hog_features_clean.p', 'wb'))
+    # print "Hog inputs pickled"
+    main()
