@@ -12,7 +12,7 @@ stepsize = 80#40
 
 # for file_start in ['hand', 'hand2', 'hand3']:
 try:
-    for file_start in ['hand' + str(i) for i in xrange(6)]:
+    for file_start in ['hand' + str(i) for i in xrange(10)]:
         for x in xrange(0,512,stepsize):
             print x
             for y in xrange(0,512,stepsize):

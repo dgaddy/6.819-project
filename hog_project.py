@@ -5,6 +5,36 @@ import pickle
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
 
+class Smoother:
+    smoothing = 0.25
+    outlier_thresh = 100
+    def __init__(self):
+        self.smoothed = (0, 0)
+        self.hist = [(0, 0)]
+        self.hist_len = 10
+
+    def add_history(self, val):
+        self.hist.append(val)
+        if len(self.hist) > self.hist_len:
+            self.hist.pop(0)
+
+    def mean_tuple(self, tuple_list):
+        return tuple(sum(x) / len(x) for x in zip(*tuple_list))
+
+    def add(self, val):
+        mean = self.mean_tuple(self.hist)
+        delta_norm = np.linalg.norm([val[i]-mean[i] for i in range(len(val))])
+        self.add_history(val)
+        if delta_norm < Smoother.outlier_thresh:
+            print val
+            self.smoothed = tuple(self.smoothed[i]*Smoother.smoothing + (1-Smoother.smoothing)*val[i] for i in xrange(len(val)))
+        else:
+            print "Didn't add"
+        return self.smoothed
+
+    def get(self):
+        return self.smoothed
+
 def hog(img, asHlist=True):
     # Code from OpenCV examples
     bin_n = 9 # Number of bins
@@ -94,6 +124,7 @@ def main():
 
     # for x in xrange(0,512,stepsize):
     #     for y in xrange(0,512,stepsize):
+    smoother = Smoother()
     hog_list, coords = pickle.load(open('hog_features_clean.p', 'rb'))#load_hog_2()
     neigh = KNeighborsClassifier(n_neighbors=5, weights='distance')
     print np.vstack(hog_list).shape
@@ -103,13 +134,16 @@ def main():
         ret, frame = cap.read()
 
         frame_hog = hog(frame, asHlist=False)
-        location = np.squeeze(neigh.predict(np.hstack(frame_hog.reshape(-1,9))))
+        location = smoother.add(np.squeeze(neigh.predict(np.hstack(frame_hog.reshape(-1,9)))))
         print location
+
+        frame = cv2.flip(frame, 1)
+        cv2.circle(frame,tuple(int(n) for n in location),10,(255,0,0),-1)
+        cv2.imshow('frame', frame)
 
         #print closest(frame_hog, hog_list)
         #cv2.imshow('frame',frame)
         if (cv2.waitKey(30) & 0xFF) == ord('q'):
-            broken = True
             break
 
         img = hogPicture(frame_hog, 40)
@@ -119,7 +153,7 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    # loaded_hog = load_hog_2()
-    # pickle.dump(loaded_hog, open('hog_features_clean.p', 'wb'))
-    # print "Hog inputs pickled"
-    main()
+    loaded_hog = load_hog_2()
+    pickle.dump(loaded_hog, open('hog_features_clean.p', 'wb'))
+    print "Hog inputs pickled"
+    # main()

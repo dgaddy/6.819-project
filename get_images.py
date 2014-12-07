@@ -53,7 +53,7 @@ for x in xrange(0,512,stepsize):
                 break
         if broken:
             break
-        cv2.imwrite('clean_data_2/hand5_%d_%d.png' % (x,y), frame)
+        cv2.imwrite('clean_data_2/hand9_%d_%d.png' % (x,y), frame)
 
     if broken:
         break
