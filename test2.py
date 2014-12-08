@@ -86,27 +86,42 @@ for i in xrange(len(test_inputs)):
 plt.show()
 
 print '\nAverage Errors'
+print 'CNN Middle: ', sum(middle_distances) / len(middle_distances)
 print 'CNN Neighbors: ', sum(neighbors_distances) / len(neighbors_distances)
 print 'CNN Regression: ', sum(regression_distances) / len(regression_distances)
-print 'CNN Middle: ', sum(middle_distances) / len(middle_distances)
+
 print 'HOG Neighbors: ', sum(hog_distances) / len(hog_distances)
 print 'HOG Regression', sum(hog_reg_distances) / len(hog_reg_distances)
-print 'HOG SVC', sum(hog_svc_distances) / len(hog_svc_distances)
+#print 'HOG SVC', sum(hog_svc_distances) / len(hog_svc_distances)
 print 'HOG NN Reg', sum(hog_nn_reg_distances) / len(hog_nn_reg_distances)
 
-subplots = (7,1)
+subplots = (5,1)
+#plt.subplot(subplots[0],subplots[1],1)
+#plt.hist(middle_distances)#plt.plot(middle_distances)
 plt.subplot(subplots[0],subplots[1],1)
-plt.plot(neighbors_distances)
+plt.hist(neighbors_distances,bins=20,range=(0,250))#plt.plot(neighbors_distances)
+plt.title('CNN KNN')
+plt.ylabel('Error Count')
+
 plt.subplot(subplots[0],subplots[1],2)
-plt.plot(regression_distances)
+plt.hist(regression_distances,bins=20,range=(0,250))#plt.plot(regression_distances)
+plt.title('CNN Regression')
+plt.ylabel('Error Count')
+
+
 plt.subplot(subplots[0],subplots[1],3)
-plt.plot(middle_distances)
+plt.hist(hog_distances,bins=20,range=(0,250))#plt.plot(hog_distances)
+plt.title('HOG KNN')
+plt.ylabel('Error Count')
+
 plt.subplot(subplots[0],subplots[1],4)
-plt.plot(hog_distances)
+plt.hist(hog_reg_distances,bins=20,range=(0,250))#plt.plot(hog_reg_distances)
+plt.title('HOG Regression')
+plt.ylabel('Error Count')
+
 plt.subplot(subplots[0],subplots[1],5)
-plt.plot(hog_svc_distances)
-plt.subplot(subplots[0],subplots[1],6)
-plt.plot(hog_reg_distances)
-plt.subplot(subplots[0],subplots[1],7)
-plt.plot(hog_nn_reg_distances)
+plt.title('HOG KNN / Regression')
+plt.hist(hog_nn_reg_distances,bins=20,range=(0,250))#plt.plot(hog_nn_reg_distances)
+plt.ylabel('Error Count')
+
 plt.show()
