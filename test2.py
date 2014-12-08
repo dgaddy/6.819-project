@@ -1,8 +1,13 @@
 import numpy as np
 import pickle
 import math
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import RidgeCV
+from sklearn.linear_model import LinearRegression
+from sklearn.covariance import EmpiricalCovariance
+from sklearn.decomposition import PCA
+from sklearn.neighbors import DistanceMetric
+from sklearn.linear_model import SGDRegressor
 from sklearn.svm import SVC
 import matplotlib.pyplot as plt
 import hog_project
@@ -31,16 +36,37 @@ hog_test_outputs = hog_outputs[test_slice]
 
 stack_inputs = np.vstack(train_inputs)
 stack_outputs = np.vstack(train_outputs)
-neigh = KNeighborsClassifier(n_neighbors=3, weights='distance')
+
+#pca = PCA(n_components=10)
+#pca.fit(hog_train_inputs)
+#hog_train_inputs = pca.transform(hog_train_inputs)
+
+#hog_test_inputs = pca.transform(hog_test_inputs)
+
+#stack_inputs = pca.transform(stack_inputs)
+#print stack_inputs.shape
+
+#mean = stack_inputs.mean(axis=0)
+#std = stack_inputs.std(axis=0)
+#std = std + (std < 1e-3) # if std is 0, set it to 1 to avoid infinities
+#stack_inputs = stack_inputs - mean
+#stack_inputs = stack_inputs / std
+
+neigh = KNeighborsRegressor(n_neighbors=4, weights='distance')
 neigh.fit(stack_inputs, stack_outputs)
 
-regression = RidgeCV()
+stack_inputs_poly = np.concatenate((stack_inputs, stack_inputs**2), 1)
+regression = LinearRegression()
 regression.fit(stack_inputs, stack_outputs)
+'''reg2_x = SGDRegressor()
+reg2_x.fit(stack_inputs, stack_outputs[:,0])
+reg2_y = SGDRegressor()
+reg2_y.fit(stack_inputs, stack_outputs[:,1])'''
 
-neigh_hog = KNeighborsClassifier(n_neighbors=5, weights='distance')
+neigh_hog = KNeighborsRegressor(n_neighbors=5, weights='distance')
 neigh_hog.fit(np.vstack(hog_train_inputs), np.vstack(hog_train_outputs))
 
-regression_hog = RidgeCV()
+regression_hog = LinearRegression()
 regression_hog.fit(np.vstack(hog_train_inputs), np.vstack(hog_train_outputs))
 
 svc_hog = SVC()
@@ -62,9 +88,18 @@ for i in xrange(len(test_inputs)):
     (x,y) = test_outputs[i]
     (xhog,yhog) = hog_test_outputs[i]
     # print x, y
+    #feat_normalized = (feat - mean)/std
+    #feat = pca.transform(feat)
+    #print feat.shape
     loc_neigh = np.squeeze(neigh.predict(feat))
+    #print loc_neigh
     # print 'neighbors ', loc_neigh
+    #feat_poly = np.concatenate((feat, feat**2))
+
     loc_reg = regression.predict(feat)
+    #reg_x = reg2_x.predict(feat)
+    #reg_y = reg2_y.predict(feat)
+    #loc_reg = (reg_x,reg_y)
     # print 'regression ', loc_reg
     loc_hog = np.squeeze(neigh_hog.predict(hog_test_inputs[i]))
     loc_hog_reg = np.squeeze(regression_hog.predict(hog_test_inputs[i]))
