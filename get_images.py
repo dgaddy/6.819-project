@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 stepsize = 80#40
-pause = 10 # the amount of frames we pause between lines
+pause = 20 # the amount of frames we pause between lines
 
 cap = cv2.VideoCapture(-1)
 
@@ -16,7 +16,7 @@ while True:
     img[-height:,-width:] = cv2.flip(resized,1)
 
     cv2.imshow('frame',img)
-    if (cv2.waitKey(1) & 0xFF) == ord('q'):
+    if (cv2.waitKey(1) & 0xFF) == ord(' '):
         break
 
 broken = False
@@ -37,7 +37,7 @@ for x in xrange(0,512,stepsize):
     #         break
 
     for y in xrange(0,512,stepsize):
-        for z in xrange(pause):
+        while True:
             ret, frame = cap.read()
             # show display
             resized = cv2.resize(frame, (0,0), fx=512.0/frame.shape[1],fy=512.0/frame.shape[0])#fx=.25, fy=.25)
@@ -48,12 +48,15 @@ for x in xrange(0,512,stepsize):
             cv2.line(img,(0,img.shape[1]/2), (img.shape[0]-1,img.shape[1]/2),(255,255,255))
             cv2.line(img,(img.shape[0]/2,0), (img.shape[0]/2,img.shape[1]-1),(255,255,255))
             cv2.imshow('frame',img)
-            if (cv2.waitKey(5) & 0xFF) == ord('q'):
+            key = cv2.waitKey(5) & 0xFF;
+            if (key == ord('q')):
                 broken = True
+                break
+            elif (key == ord(' ')):
                 break
         if broken:
             break
-        cv2.imwrite('clean_data_2/hand9_%d_%d.png' % (x,y), frame)
+        cv2.imwrite('clean_data_close/hand14_%d_%d.png' % (x,y), frame)
 
     if broken:
         break
