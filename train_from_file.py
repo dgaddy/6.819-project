@@ -12,12 +12,12 @@ stepsize = 80#40
 
 # for file_start in ['hand', 'hand2', 'hand3']:
 try:
-    for file_start in ['hand' + str(i) for i in xrange(10)]:
+    for file_start in ['hand' + str(i) for i in xrange(15)]:
         for x in xrange(0,512,stepsize):
             print x
             for y in xrange(0,512,stepsize):
 
-                image = cnn.caffe.io.load_image('clean_data_2/%s_%i_%i.png' % (file_start, x,y))
+                image = cnn.caffe.io.load_image('clean_data_close/%s_%i_%i.png' % (file_start, x,y))
 
                 feat = cnn.calculate_features(image)
                 inputs.append(feat)

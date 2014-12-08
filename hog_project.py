@@ -3,15 +3,16 @@ import cv2
 import os, math
 import pickle
 import matplotlib.pyplot as plt
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import RidgeCV
 
 class Smoother:
-    smoothing = 0.25
-    outlier_thresh = 100
+    smoothing = 0.5
+    outlier_thresh = 200
     def __init__(self):
         self.smoothed = (0, 0)
         self.hist = [(0, 0)]
-        self.hist_len = 10
+        self.hist_len = 5
 
     def add_history(self, val):
         self.hist.append(val)
@@ -78,7 +79,7 @@ def load_hog():
     return hog_list
 
 def load_hog_2():
-    directory = 'clean_data_2'
+    directory = 'clean_data_close'
     hog_list = []
     coordinates = []
     for filepath in os.listdir(os.path.join(os.getcwd(), directory)):
@@ -126,11 +127,19 @@ def main():
     hog_list, coords = pickle.load(open('hog_features_clean.p', 'rb'))#load_hog_2()
     reg = RidgeCV()
     reg.fit(np.vstack(hog_list), np.vstack(coords))
+    neigh = KNeighborsClassifier(n_neighbors=5, weights='distance')
+    neigh.fit(np.vstack(hog_list), np.vstack(coords))
+    #video  = cv2.VideoWriter('video.avi', cv2.cv.FOURCC(*'XVID'), 12, (640, 480))
+    #print video.isOpened()
     while True:
         ret, frame = cap.read()
 
         frame_hog = hog(frame, asHlist=False)
-        location = smoother.add(np.squeeze(reg.predict(np.hstack(frame_hog.reshape(-1,9)))))
+        frame_hog_hlist = hog(frame)
+        reg_loc = np.squeeze(reg.predict(np.hstack(frame_hog_hlist)))
+        neigh_loc = np.squeeze(neigh.predict(np.hstack(frame_hog_hlist)))
+        location = smoother.add(tuple((reg_loc[i] + neigh_loc[i])/2 for i in xrange(len(neigh_loc))))
+        location = (location[0]*frame.shape[1]/512.0, location[1]*frame.shape[0]/512.0)
         print location
 
         frame = cv2.flip(frame, 1)
@@ -140,6 +149,7 @@ def main():
         cv2.line(frame, (0, fw/2), (fh, fw/2), (0, 0, 0))
         cv2.line(frame, (fh/2, 0), (fh/2, fw), (0, 0, 0))
         cv2.imshow('frame', frame)
+        #video.write(frame)
 
         if (cv2.waitKey(30) & 0xFF) == ord('q'):
             break
@@ -148,6 +158,7 @@ def main():
         cv2.imshow('hog',img)
 
     cap.release()
+    #video.release()
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
