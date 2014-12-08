@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{gensymb}
 
 % Include other packages here, before hyperref.
 
@@ -101,13 +102,36 @@ Created feature vectors to describe image.  We evaluated two different methods o
 
 One source of features we evaluated was convolutional neural networks.  Convolutional neural networks have been used to get state of the art results in object recognition tasks such as fdjkas;fj that competition \cite{something}.  It has been found that the values of neurons in the upper layers of the network provide good features for computer vision tasks, even though the network was not trained for these tasks \cite{something}.  For our features, we used the neural network model trained by fdjslf People for fjksdlfj task.  \cite{jia2014caffe}  We ran their model and extracted the outputs of the final fully connected layer before the softmax layer that 
 
-\subsection{Histogram of Gradients}
+\subsection{Histograms of Gradients}
 
-\cite{dalal2005histograms}
+We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
+
+% TODO Insert image of HOG and VideoCap Image here
+
+\subsection{Classifier}
+We experimented with several different classifiers including k-Nearest Neighbors, linear regression, and SVM. We found that a combination of k-nearest neighbors and linear regression worked best across a wide variety of data. We trained the k-nearest neighbors and linear regression models from sci-kit learn separately on 15 sets of test data comprised of the HOG features computed from each image. These models each predicted a location based on HOG input. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
+
+\subsection{Smoothing}
+In order to make the system more robust to noise, we both smooth the location and eliminate outliers. Let $x[n]$ be the location at frame $n$ and $u[n]$ be the location output from the k-NN and linear regression combination at frame $n$. Outliers are eliminated if
+\begin{equation}
+	\sqrt{\sum_{i=n-l}^{n}(u[n]-x[i])^2} >= \epsilon
+\end{equation}
+where $l$ and $\epsilon$ are parameters representing the amount of history to remember for computing outliers and the sensitivity to outliers, respectively. We used $l=10$ and $\epsilon=200$. Smoothing is implemented by the formula 
+\begin{equation}
+	x[n+1] = \left\{
+		\begin{array}{l l}
+			\lambda x[n] + (1-\lambda)u[n] & \qquad \text{if not an outlier} \\
+			x[n] & \qquad \text{otherwise}
+		\end{array}
+	\right.
+\end{equation}
+ where $\lambda$ is a smoothing parameter between 0 and 1. We used $\lambda=0.5$ to balance quick responsiveness with robustness to noise.
 
 \section{Results}
 
 \subsection{Performance on Test Data}
+
+\subsubsection{Performance of Difference Classifiers}
 
 \subsection{Evaluation as a Computer Interaction Device}
 

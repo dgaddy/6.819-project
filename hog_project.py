@@ -37,7 +37,8 @@ class Smoother:
         return self.smoothed
 
 def hog(img, asHlist=True):
-    # Code from OpenCV examples
+    # Code from OpenCV examples.
+    # http://docs.opencv.org/trunk/doc/py_tutorials/py_ml/py_svm/py_svm_opencv/py_svm_opencv.html
     bin_n = 9 # Number of bins
     #grid_n = (12,20)
     grid_n = (8,12)
@@ -105,7 +106,7 @@ def hogPicture(w,bs):
     bim = []
     bim.append(bim1)
     for i in xrange(1,bs):
-        rot_mat = cv2.getRotationMatrix2D((center_col, center_col), -i*20, 1)
+        rot_mat = cv2.getRotationMatrix2D((center_col, center_col), -i*40, 1)
         bim.append(cv2.warpAffine(bim1,rot_mat,(bs,bs)))
 
     # make pictures of positive weights bs adding up weighted glyphs
@@ -155,6 +156,7 @@ def main():
             break
 
         img = hogPicture(frame_hog, 40)
+        img = cv2.flip(img, 1)
         cv2.imshow('hog',img)
 
     cap.release()

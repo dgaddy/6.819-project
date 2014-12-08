@@ -1,0 +1,64 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{dalal2005histograms}
+N.~Dalal and B.~Triggs.
+\newblock Histograms of oriented gradients for human detection.
+\newblock In {\em Computer Vision and Pattern Recognition, 2005. CVPR 2005.
+  IEEE Computer Society Conference on}, volume~1, pages 886--893. IEEE, 2005.
+
+\bibitem{erol2007vision}
+A.~Erol, G.~Bebis, M.~Nicolescu, R.~D. Boyle, and X.~Twombly.
+\newblock Vision-based hand pose estimation: A review.
+\newblock {\em Computer Vision and Image Understanding}, 108(1):52--73, 2007.
+
+\bibitem{freeman1995orientation}
+W.~T. Freeman and M.~Roth.
+\newblock Orientation histograms for hand gesture recognition.
+\newblock In {\em International Workshop on Automatic Face and Gesture
+  Recognition}, volume~12, pages 296--301, 1995.
+
+\bibitem{jia2014caffe}
+Y.~Jia, E.~Shelhamer, J.~Donahue, S.~Karayev, J.~Long, R.~Girshick,
+  S.~Guadarrama, and T.~Darrell.
+\newblock Caffe: Convolutional architecture for fast feature embedding.
+\newblock {\em arXiv preprint arXiv:1408.5093}, 2014.
+
+\bibitem{lee2011vision}
+D.~Lee and S.~Lee.
+\newblock Vision-based finger action recognition by angle detection and contour
+  analysis.
+\newblock {\em ETRI Journal}, 33(3):415--422, 2011.
+
+\bibitem{ong2004boosted}
+E.-J. Ong and R.~Bowden.
+\newblock A boosted classifier tree for hand shape detection.
+\newblock In {\em Automatic Face and Gesture Recognition, 2004. Proceedings.
+  Sixth IEEE International Conference on}, pages 889--894. IEEE, 2004.
+
+\bibitem{scikit-learn}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock {\em Journal of Machine Learning Research}, 12:2825--2830, 2011.
+
+\bibitem{tompson2014real}
+J.~Tompson, M.~Stein, Y.~Lecun, and K.~Perlin.
+\newblock Real-time continuous pose recovery of human hands using convolutional
+  networks.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 33(5):169, 2014.
+
+\bibitem{van2009haarlet}
+M.~Van~den Bergh, E.~Koller-Meier, F.~Bosch{\'e}, and L.~Van~Gool.
+\newblock Haarlet-based hand gesture recognition for 3d interaction.
+\newblock In {\em Applications of Computer Vision (WACV), 2009 Workshop on},
+  pages 1--8. IEEE, 2009.
+
+\bibitem{van2011combining}
+M.~Van~den Bergh and L.~Van~Gool.
+\newblock Combining rgb and tof cameras for real-time 3d hand gesture
+  interaction.
+\newblock In {\em Applications of Computer Vision (WACV), 2011 IEEE Workshop
+  on}, pages 66--72. IEEE, 2011.
+
+\end{thebibliography}
