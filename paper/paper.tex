@@ -93,15 +93,11 @@ Second, we assume that the hand is roughly at a constant distance from the camer
 
 \subsection{Data collection and evaluation}
 
-We collected a set of images to evaluate the relative effectiveness of different methods.  These images were collected with a standard webcam.  The hand to recognize was approximately three feet away, a distance similar to what someone using a computer might be at.  A dot was displayed on the screen and the user pointed at the dot as it scanned across the screen.  The dot moved along a grid with spacing of fjdk;fdjsklf pixels and for each location a picture was taken of the user pointing at that location from the webcam.  We repeated this procedure fdjkslf times, collecting a total of fdjsklf images for fdjsklfj different locations.
+We collected a set of images to evaluate the relative effectiveness of different methods.  These images were collected from a standard webcam directly above a computer screen.  Each picture contained a pointing hand to recognize on a blank background.  The hand was approximately one foot away from the camera and screen.  To keep hand location consistent, the user was shown a video of their hand as they recorded and attempted to keep their hand on a crosshair overlayed at the center of the image.  A dot was displayed on the screen and the user pointed at the dot as it moved across the screen.  The dot moved along a seven by seven grid with spacing of 80 pixels and for each location a picture was taken of the user pointing at that location from the webcam.  We repeated this grid collection procedure 15 times, collecting a total of 735 images.
 
-The data was split into two sets, a training set and a test set.  The test set consisted of images taken from a different scan of the screen.  This was done because images collected during the same scanning process tended to have very similar locations and artificially raised the scores received.
+For evaluation, we used 15-fold cross validation, except the groups were chosen based on the grid collection iteration instead of a random sample.  For each data group, we trained on the other 14 groups and evaluated performance on the group, then we took the average performance for all 15 groups.  The reason for choosing groups based on collection iteration instead of random sampling is that images collected during the same scanning process tended to be more similar so training with images in the same iteration as the test data artificially increased scores.
 
-We trained our models on the training set and then collected performance metrics on the test set.
-
-Talk about how there is some noise in the data.  Pointing at a location on the screen is very inexact.  Can we do some sort of short experiment to show that humans cannot really tell where they are pointing?
-
-cross hairs?
+It is important to note that the data collected has inherent noise because people are limited in precision for pointing at a location on a screen.  The location a user thinks they are pointing at may depend on the relative orientations of their eyes, their hands, and the screen.  For this reason, no system will be able to achieve perfect results.
 
 \subsection{Overview of methods}
 
