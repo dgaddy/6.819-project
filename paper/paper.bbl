@@ -6,6 +6,12 @@ N.~Dalal and B.~Triggs.
 \newblock In {\em Computer Vision and Pattern Recognition, 2005. CVPR 2005.
   IEEE Computer Society Conference on}, volume~1, pages 886--893. IEEE, 2005.
 
+\bibitem{donahue2013decaf}
+J.~Donahue, Y.~Jia, O.~Vinyals, J.~Hoffman, N.~Zhang, E.~Tzeng, and T.~Darrell.
+\newblock Decaf: A deep convolutional activation feature for generic visual
+  recognition.
+\newblock {\em arXiv preprint arXiv:1310.1531}, 2013.
+
 \bibitem{erol2007vision}
 A.~Erol, G.~Bebis, M.~Nicolescu, R.~D. Boyle, and X.~Twombly.
 \newblock Vision-based hand pose estimation: A review.
@@ -22,6 +28,12 @@ Y.~Jia, E.~Shelhamer, J.~Donahue, S.~Karayev, J.~Long, R.~Girshick,
   S.~Guadarrama, and T.~Darrell.
 \newblock Caffe: Convolutional architecture for fast feature embedding.
 \newblock {\em arXiv preprint arXiv:1408.5093}, 2014.
+
+\bibitem{krizhevsky2012imagenet}
+A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1097--1105, 2012.
 
 \bibitem{lee2011vision}
 D.~Lee and S.~Lee.
