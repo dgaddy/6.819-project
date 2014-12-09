@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{gensymb}
 
 % Include other packages here, before hyperref.
 
@@ -107,15 +108,54 @@ Created feature vectors to describe image.  We evaluated two different methods o
 
 One source of features we evaluated was convolutional neural networks.  Convolutional neural networks have been used to get state of the art results in object recognition tasks such as the ILSVRC-2012 competition \cite{krizhevsky2012imagenet}.  They are made up of many layers of convolutional filters which are learned from training images, with each layer learning a higher representation of the image.   It has been found that the values of hidden units in the intermediate layers of a network provide good features for a variety of computer vision tasks, even tasks that the network was not trained for \cite{donahue2013decaf}.  For our features, we used the Caffe deep learning framework\cite{jia2014caffe} running a pretrained model architecture that is a variant of Krizhevsky's ILSVRC network\cite{krizhevsky2012imagenet}\footnote{The pretrained model is downloadable from the Caffe Model Zoo under the name 'BVLC Reference CaffeNet'}.  We ran their model and extracted the outputs of the final fully connected layer before the softmax layer, which gave us a 4096 dimensional feature vector.
 
-\subsection{Histogram of gradients}
+\begin{figure*}
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+		\includegraphics[height=140px]{figures/PointImage.png}
+		\includegraphics[height=140px]{figures/PointHOG.png}
+	\end{center}
+	\caption{An image (on the left) and our corresponding HOG output (on the right). The location calculated by our algorithm is illustrated by the blue dot on the left image.}
+	\label{fig:pointImages}
+\end{figure*}
 
-\cite{dalal2005histograms}
+\subsection{Histogram of Gradients}
+
+We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
+
+\subsection{Classifier}
+We experimented with several different classifiers including k-Nearest Neighbors, linear regression, and SVM. We found that a combination of k-nearest neighbors and linear regression worked best across a wide variety of data. We trained the k-nearest neighbors and linear regression models from sci-kit learn separately on 15 sets of test data comprised of the HOG features computed from each image. These models each predicted a location based on HOG input. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
+
+\subsection{Smoothing}
+In order to make the system more robust to noise, we both smooth the location and eliminate outliers. Let $x[n]$ be the location at frame $n$ and $u[n]$ be the location output from the k-NN and linear regression combination at frame $n$. Outliers are eliminated if
+\begin{equation}
+	\sqrt{\sum_{i=n-l}^{n}(u[n]-x[i])^2} >= \epsilon
+\end{equation}
+where $l$ and $\epsilon$ are parameters representing the amount of history to remember for computing outliers and the sensitivity to outliers, respectively. We used $l=10$ and $\epsilon=200$. Smoothing is implemented by the formula 
+\begin{equation}
+	x[n+1] = \left\{
+		\begin{array}{l l}
+			\lambda x[n] + (1-\lambda)u[n] & \qquad \text{if not an outlier} \\
+			x[n] & \qquad \text{otherwise}
+		\end{array}
+	\right.
+\end{equation}
+ where $\lambda$ is a smoothing parameter between 0 and 1. We used $\lambda=0.5$ to balance quick responsiveness with robustness to noise.
 
 \section{Results}
 
 \subsection{Performance on test data}
 
-\subsection{Evaluation of use for computer interaction}
+\subsubsection{Performance of Different Classifiers}
+We evaluated the performance of both convolution neural networks and HOG with k-Nearest Neighbors and Linear Regression. The results from our tests our given in figure \ref{fig:hist}, which is a histogram of the error of the different classifiers. The error is the euclidean distance measured in pixels between the predicted point and the actual point.
+\begin{figure*}
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+		\includegraphics[width=0.9\linewidth]{figures/ClassifierErrorHist.png}
+	\end{center}
+	\caption{An image (on the left) and our corresponding HOG output (on the right). The location calculated by our algorithm is illustrated by the blue dot on the left image.}
+	\label{fig:hist}
+\end{figure*}
+\subsection{Evaluation as a Computer Interaction Device}
 
 To test our system's effectiveness for computer interaction, we used the HOG feature based system to predict where a user was pointing at a computer screen.  We used the prediction to move a dot on the screen, which simulated the movement of a computer mouse.  Something about effectiveness fdjslfj
 
