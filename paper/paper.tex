@@ -26,7 +26,7 @@
 \begin{document}
 
 %%%%%%%%% TITLE
-\title{\LaTeX\ Detecting Hand Direction for Computer Interaction}
+\title{Detecting Hand Direction for Computer Interaction}
 
 \author{Ben Mattinson and David Gaddy\\
 Massachusetts Institute of Technology\\
@@ -106,7 +106,7 @@ Created feature vectors to describe image.  We evaluated two different methods o
 
 \subsection{Convolutional neural networks}
 
-One source of features we evaluated was convolutional neural networks.  Convolutional neural networks have been used to get state of the art results in object recognition tasks such as the ILSVRC-2012 competition \cite{krizhevsky2012imagenet}.  It has been found that the values of neurons in the upper layers of the network provide good features for computer vision tasks, even though the network was not trained for these tasks \cite{donahue2013decaf}.  For our features, we used the neural network model trained by fdjslf People for fjksdlfj task.  \cite{jia2014caffe}  We ran their model and extracted the outputs of the final fully connected layer before the softmax layer that 
+One source of features we evaluated was convolutional neural networks.  Convolutional neural networks have been used to get state of the art results in object recognition tasks such as the ILSVRC-2012 competition \cite{krizhevsky2012imagenet}.  They are made up of many layers of convolutional filters which are learned from training images, with each layer learning a higher representation of the image.   It has been found that the values of hidden units in the intermediate layers of a network provide good features for a variety of computer vision tasks, even tasks that the network was not trained for \cite{donahue2013decaf}.  For our features, we used the Caffe deep learning framework\cite{jia2014caffe} running a pretrained model architecture that is a variant of Krizhevsky's ILSVRC network\cite{krizhevsky2012imagenet}\footnote{The pretrained model is downloadable from the Caffe Model Zoo under the name 'BVLC Reference CaffeNet'}.  We ran their model and extracted the outputs of the final fully connected layer before the softmax layer, which gave us a 4096 dimensional feature vector.
 
 \begin{figure*}
 	\begin{center}
