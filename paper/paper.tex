@@ -111,6 +111,15 @@ One source of features we evaluated was convolutional neural networks.  Convolut
 \begin{figure*}
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+		\includegraphics[height=140px]{figures/cnn.png}
+	\end{center}
+	\caption{This shows a neural network architechture similar to the one used.  We used the values of the second layer from the right as our features.}
+	\label{fig:pointImages}
+\end{figure*}
+
+\begin{figure*}
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
 		\includegraphics[height=140px]{figures/PointImage.png}
 		\includegraphics[height=140px]{figures/PointHOG.png}
 	\end{center}
@@ -122,7 +131,7 @@ One source of features we evaluated was convolutional neural networks.  Convolut
 
 We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
 
-\subsection{Classifier}
+\subsection{Regression}
 We experimented with several different regression models including k-Nearest Neighbors, and least squares linear regression. We found that an average of the output of k-nearest neighbors and linear regression worked best across a wide variety of data. We trained the k-nearest neighbors and linear regression models using the scikit-learn library\cite{scikit-learn}.  The models took in the features vectors from HOG and the neural networks and predicted a location. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
 
 \subsection{Smoothing}
@@ -162,6 +171,7 @@ To test our system's effectiveness for computer interaction, we used the HOG fea
 The time to process an image using convolutional neural networks was too high to allow for real time computer interaction, since each frame took several seconds to process.  Using a GPU to process frames would greatly increase the speed and should allow for the possibility of using these features in a real time system.
 
 \section{Conclusion}
+In this work, we explored detecting hand direction in images for interfacing with a computer.  We experimented with HOG as well as convolutional neural network features and tried several different regression methods.  To evaluate the effectiveness of different methods quantitatively, we tried our methods on a set of test images.  Using HOG features and a k-nearest neighbor regression, we achieved an average error of fjdsklfj pixels on these images.  Testing the system qualitatively, we found that the system was not very robust.
 
 %-------------------------------------------------------------------------
 
