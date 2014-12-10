@@ -103,7 +103,7 @@ It is important to note that the data collected has inherent noise because peopl
 
 \subsection{Overview of methods}
 
-Created feature vectors to describe image.  We evaluated two different methods of extracting these feature vectors: convolutional neural networks and histograms of gradient orientations.  We then trained regressors from these features to the ground truth location.  We experimented with several different types of regressors and report here the results for least squares linear regression and K-nearest neighbors regression.  Other regression methods did not provide any significant improvement.  We used the scikit-learn library implementation of these methods \cite{scikit-learn}.
+To perform the task of deciding where a hand is pointing, we first created feature vectors to describe the images, then we used regression to predict where a hand was pointing.  We evaluated two different methods of extracting these feature vectors: convolutional neural networks and histograms of gradient orientations, which are described in detail below.
 
 \subsection{Convolutional neural networks}
 
@@ -138,7 +138,7 @@ One source of features we evaluated was convolutional neural networks.  Convolut
 We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
 
 \subsection{Regression}
-We experimented with several different including k-Nearest Neighbors and linear regression. We found that a combination of k-nearest neighbors worked best across a wide variety of data. We trained the k-nearest neighbors and linear regression models from sci-kit learn separately on 15 sets of test data comprised of the HOG features computed from each image. These models each predicted a location based on HOG input. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
+We experimented with several different regression models including k-Nearest Neighbors, and least squares linear regression. We found that an average of the output of k-nearest neighbors and linear regression worked best across a wide variety of data. We trained the k-nearest neighbors and linear regression models using the scikit-learn library\cite{scikit-learn}.  The models took in the features vectors from HOG and the neural networks and predicted a location. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
 
 \subsection{Smoothing}
 In order to make the system more robust to noise, we both smooth the location and eliminate outliers. Let $x[n]$ be the location at frame $n$ and $u[n]$ be the location output from the k-NN and linear regression combination at frame $n$. Outliers are eliminated if
