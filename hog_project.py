@@ -91,6 +91,23 @@ def load_hog_2():
         coordinates.append([int(n) for n in os.path.splitext(os.path.basename(filepath))[0].split('_') if n.isdigit()])
     return hog_list, coordinates
 
+def load_hog_3():
+    hog_list = []
+    coordinates = []
+    stepsize = 80#40
+    for file_start in ['hand' + str(i) for i in xrange(15)]:
+        for x in xrange(0,512,stepsize):
+            print x
+            for y in xrange(0,512,stepsize):
+
+                image = cv2.imread('clean_data_close/%s_%i_%i.png' % (file_start, x,y))
+
+                feat = hog(image)
+                hog_list.append(feat)
+                coordinates.append((x,y))
+    return hog_list, coordinates
+
+
 def closest(frame_hog, hog_list):
     diff_mag = [np.linalg.norm(frame_hog - l) for l in hog_list]
     return np.argmin(diff_mag)
@@ -100,9 +117,9 @@ def hogPicture(w,bs):
     s = w.shape
 
     # construct a "glyph" for each orientaion
-    bim1 = np.zeros((bs, bs));
+    bim1 = np.zeros((bs, bs))
     center_col = math.floor(bs/2)
-    bim1[:,center_col:center_col+1] = 1;
+    bim1[:,center_col:center_col+1] = 1
     bim = []
     bim.append(bim1)
     for i in xrange(1,bs):
@@ -126,8 +143,8 @@ def main():
 
     smoother = Smoother()
     hog_list, coords = pickle.load(open('hog_features_clean.p', 'rb'))#load_hog_2()
-    reg = RidgeCV()
-    reg.fit(np.vstack(hog_list), np.vstack(coords))
+    # reg = RidgeCV()
+    # reg.fit(np.vstack(hog_list), np.vstack(coords))
     neigh = KNeighborsClassifier(n_neighbors=5, weights='distance')
     neigh.fit(np.vstack(hog_list), np.vstack(coords))
     #video  = cv2.VideoWriter('video.avi', cv2.cv.FOURCC(*'XVID'), 12, (640, 480))
@@ -137,9 +154,10 @@ def main():
 
         frame_hog = hog(frame, asHlist=False)
         frame_hog_hlist = hog(frame)
-        reg_loc = np.squeeze(reg.predict(np.hstack(frame_hog_hlist)))
+        # reg_loc = np.squeeze(reg.predict(np.hstack(frame_hog_hlist)))
         neigh_loc = np.squeeze(neigh.predict(np.hstack(frame_hog_hlist)))
-        location = smoother.add(tuple((reg_loc[i] + neigh_loc[i])/2 for i in xrange(len(neigh_loc))))
+        # location = smoother.add(tuple((reg_loc[i] + neigh_loc[i])/2 for i in xrange(len(neigh_loc))))
+        location = smoother.add(neigh_loc)
         location = (location[0]*frame.shape[1]/512.0, location[1]*frame.shape[0]/512.0)
         print location
 
@@ -164,7 +182,7 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    # loaded_hog = load_hog_2()
+    # loaded_hog = load_hog_3()
     # pickle.dump(loaded_hog, open('hog_features_clean.p', 'wb'))
     # print "Hog inputs pickled"
     main()

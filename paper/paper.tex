@@ -4,6 +4,8 @@
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{placeins}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{gensymb}
@@ -92,13 +94,10 @@ First, we assume that the images have a clear background.  Although this assumpt
 
 Second, we assume that the hand is roughly at a constant distance from the camera and at roughly the same location in the image.  For the application of pointing at a computer screen, this assumption is fairly reasonable since a user's distance to the screen will usually vary by only a few feet at most and is likely to hold their hand directly in front of the screen to point at it.  To make the system more robust or for other applications, the location of the hand in an image could be detected using the methods described in previous work and our system could be passed only the region around a detected image.  Additionally, we could make our system more robust to distance and location by training on images that contained hands at different distances and locations.
 
-\subsection{Data collection and evaluation}
+\subsection{Data collection}
 
 We collected a set of images to evaluate the relative effectiveness of different methods.  These images were collected from a standard webcam directly above a computer screen.  Each picture contained a pointing hand to recognize on a blank background.  The hand was approximately one foot away from the camera and screen.  To keep hand location consistent, the user was shown a video of their hand as they recorded and attempted to keep their hand on a crosshair overlayed at the center of the image.  A dot was displayed on the screen and the user pointed at the dot as it moved across the screen.  The dot moved along a seven by seven grid with spacing of 80 pixels and for each location a picture was taken of the user pointing at that location from the webcam.  We repeated this grid collection procedure 15 times, collecting a total of 735 images.
 
-For evaluation, we used 15-fold cross validation, except the groups were chosen based on the grid collection iteration instead of a random sample.  For each data group, we trained on the other 14 groups and evaluated performance on the group, then we took the average performance for all 15 groups.  The reason for choosing groups based on collection iteration instead of random sampling is that images collected during the same scanning process tended to be more similar so training with images in the same iteration as the test data artificially increased scores.
-
-It is important to note that the data collected has inherent noise because people are limited in precision for pointing at a location on a screen.  The location a user thinks they are pointing at may depend on the relative orientations of their eyes, their hands, and the screen.  For this reason, no system will be able to achieve perfect results.
 
 \subsection{Overview of methods}
 
@@ -117,16 +116,6 @@ One source of features we evaluated was convolutional neural networks.  Convolut
 	\label{fig:pointImages}
 \end{figure*}
 
-\begin{figure*}
-	\begin{center}
-		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
-		\includegraphics[height=140px]{figures/PointImage.png}
-		\includegraphics[height=140px]{figures/PointHOG.png}
-	\end{center}
-	\caption{An image (on the left) and our corresponding HOG output (on the right). The location calculated by our algorithm is illustrated by the blue dot on the left image.}
-	\label{fig:pointImages}
-\end{figure*}
-
 \subsection{Histogram of Gradients}
 
 We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
@@ -137,7 +126,7 @@ We experimented with several different regression models including k-Nearest Nei
 \subsection{Smoothing}
 In order to make the system more robust to noise, we both smooth the location and eliminate outliers. Let $x[n]$ be the location at frame $n$ and $u[n]$ be the location output from the k-NN and linear regression combination at frame $n$. Outliers are eliminated if
 \begin{equation}
-	\sqrt{\sum_{i=n-l}^{n}(u[n]-x[i])^2} >= \epsilon
+	\sqrt{\sum_{i=n-l}^{n}(u[n]-x[i])^2} \geq \epsilon
 \end{equation}
 where $l$ and $\epsilon$ are parameters representing the amount of history to remember for computing outliers and the sensitivity to outliers, respectively. We used $l=10$ and $\epsilon=200$. Smoothing is implemented by the formula 
 \begin{equation}
@@ -149,23 +138,141 @@ where $l$ and $\epsilon$ are parameters representing the amount of history to re
 	\right.
 \end{equation}
  where $\lambda$ is a smoothing parameter between 0 and 1. We used $\lambda=0.5$ to balance quick responsiveness with robustness to noise.
+ 
+\subsection{Evaluation}
+For evaluation, we used 15-fold cross validation, except the groups were chosen based on the grid collection iteration instead of a random sample.  For each data group, we trained on the other 14 groups and evaluated performance on the group, then we took the average performance for all 15 groups.  The reason for choosing groups based on collection iteration instead of random sampling is that images collected during the same scanning process tended to be more similar so training with images in the same iteration as the test data artificially increased scores.
+
+It is important to note that the data collected has inherent noise because people are limited in precision for pointing at a location on a screen.  The location a user thinks they are pointing at may depend on the relative orientations of their eyes, their hands, and the screen.  For this reason, no system will be able to achieve perfect results.
 
 \section{Results}
 
 \subsection{Performance on test data}
 
-\subsubsection{Performance of Different Classifiers}
-We evaluated the performance of both convolution neural networks and HOG with k-Nearest Neighbors and Linear Regression. The results from our tests our given in figure \ref{fig:hist}, which is a histogram of the error of the different classifiers. The error is the euclidean distance measured in pixels between the predicted point and the actual point.
+\subsubsection{Performance of Different Regressions}
+We evaluated the performance of both convolutional neural networks and HOG with k-Nearest Neighbors and Linear Regression. We used this data to aid us in selecting a regression method. The results from our tests our given both in the table below and in figure \ref{fig:hist}, which is a histogram of the error of the different classifiers. The error is the euclidean distance measured in pixels between the predicted point and the actual point.
+
+\begin{table}
+	\caption{}
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			\multicolumn{2}{|c|}{\textbf{Errors for Convolution Neural Nets}}\\\hline
+			\textbf{Regression Type} & \textbf{Average Error (Pixels)} \\\hline
+			k-Nearest Neighbors & 47.8 \\\hline
+			Linear Regression &  114.2 \\\hline	
+		\end{tabular}
+		\begin{tabular}{|c|c|}
+			\hline
+			\multicolumn{2}{|c|}{\textbf{Errors for Histogram of Oriented Gradients}} \\\hline
+			\textbf{Regression Type} & \textbf{Average Error (Pixels)} \\\hline
+			k-Nearest Neighbors & 32.0\\\hline
+			Linear Regression & 79.7 \\\hline
+			Combined & 47.0 \\\hline
+		\end{tabular}
+	\end{center}
+	\label{table:meanErrors}
+\end{table}
+
+The k-Nearest Neighbors algorithm when applied to HOG yields the highest accuracy as can be seen from both the mean error in Table \ref{table:meanErrors} and the error distribution in Figure \ref{fig:hist}. 
+ 
 \begin{figure*}
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
 		\includegraphics[width=0.9\linewidth]{figures/ClassifierErrorHist.png}
 	\end{center}
-	\caption{An image (on the left) and our corresponding HOG output (on the right). The location calculated by our algorithm is illustrated by the blue dot on the left image.}
+	\caption{}
 	\label{fig:hist}
 \end{figure*}
-\subsection{Evaluation as a Computer Interaction Device}
 
+\begin{figure}[t]
+	\begin{center}
+		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+		\begin{subfigure}[b]{0.45\linewidth}
+			\includegraphics[width=\linewidth]{figures/PointImage.png}
+			\caption{} % Just to get the (a)
+			\label{fig:pointImage}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.45\linewidth}
+			\includegraphics[width=\linewidth]{figures/PointLeft2Image.png}
+			\caption{}
+			\label{fig:pointLeft2Image}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.45\linewidth}
+			\includegraphics[width=\linewidth]{figures/PointHOGedit.png}
+			\caption{}
+			\label{fig:pointHogEdit}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.45\linewidth}
+			\includegraphics[width=\linewidth]{figures/PointLeft2HOGedit.png}
+			\caption{}
+			\label{fig:pointLeft2HogEdit}
+		\end{subfigure}
+	\end{center}
+	\caption{The above images \ref{fig:pointImage} and \ref{fig:pointLeft2Image} demonstrate the correct output of our algorithm. The corresponding HOG features of each image can be seen below in \ref{fig:pointHogEdit} and \ref{fig:pointLeft2HogEdit}. The algorithm works well when the entire pointer finger is visible against the background as illustrated by \ref{fig:pointImage} or when some portion of the pointer finger is visible against the background, even if much of it is located in front of the rest of the hand as shown in \ref{fig:pointLeft2Image}.}
+	\label{fig:pointImages}
+\end{figure}
+\begin{center}
+\begin{figure*}[t]
+	% Figure on bad images
+	\begin{center}
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointLeftImage.png}
+			\caption{} % Just to get the (a)
+			\label{fig:pointLeftImage}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointRightImage.png}
+			\caption{}
+			\label{fig:pointRightImage}
+		\end{subfigure}
+		~\\
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointLeftHOG.png}
+			\caption{}
+			\label{fig:pointLeftHog}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointRightHOG.png}
+			\caption{}
+			\label{fig:pointRightHog}
+		\end{subfigure}
+	\end{center}
+	\caption{Examples of images in which our algorithm does not perform as well. The hand is pointing to different points on the screen in images \ref{fig:pointLeftImage} and \ref{fig:pointRightImage}. However, the HOG outputs in \ref{fig:pointLeftHog} and \ref{fig:pointRightHog} are almost identical. This happens because the HOG algorithm mostly detects the outline of the hand and not the pointing finger which is facing mostly toward the camera. Because the HOG images are so similar, the regression does not train properly, causing the blue cursor in \ref{fig:pointLeftImage} and \ref{fig:pointRightImage} to be in the incorrect location.}
+	\label{fig:pointErrors}
+\end{figure*}
+\begin{figure*}[b]
+	% Figure on bad images
+	\begin{center}
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointFarImage.png}
+			\caption{} % Just to get the (a)
+			\label{fig:pointFarImage}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointCloseImage.png}
+			\caption{}
+			\label{fig:pointCloseImage}
+		\end{subfigure}
+		~\\
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointFarHOG.png}
+			\caption{}
+			\label{fig:pointFarHog}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{figures/PointCloseHOG.png}
+			\caption{}
+			\label{fig:pointCloseHog}
+		\end{subfigure}
+	\end{center}
+	\caption{The above images \ref{fig:pointFarImage} and \ref{fig:pointCloseImage} illustrate the difficulty in tracking the exact position of the pointer finger when it is pointing perpendicular to the camera. The finger in \ref{fig:pointCloseImage} is pointing more toward the camera than the finger in \ref{fig:pointFarImage}, but it is difficult for even a human to distinguish between the two. The HOG images \ref{fig:pointFarHog} and \ref{fig:pointCloseHog} are nearly indistinguishable as a result.}
+	\label{fig:close}
+\end{figure*}
+\end{center}
+\FloatBarrier
+
+\subsection{Evaluation as a Computer Interaction Device}
+	
 To test our system's effectiveness for computer interaction, we used the HOG feature based system to predict where a user was pointing at a computer screen.  We used the prediction to move a dot on the screen, which simulated the movement of a computer mouse.  Something about effectiveness fdjslfj
 
 The time to process an image using convolutional neural networks was too high to allow for real time computer interaction, since each frame took several seconds to process.  Using a GPU to process frames would greatly increase the speed and should allow for the possibility of using these features in a real time system.
