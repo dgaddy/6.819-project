@@ -9,6 +9,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{gensymb}
+\usepackage{dblfloatfix}
+\usepackage{fixltx2e}
 
 % Include other packages here, before hyperref.
 
@@ -46,7 +48,7 @@ Massachusetts Institute of Technology\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-We present a method for detecting the direction of a pointing hand in an image for the purpose of creating a computer interface based on pointing.  Given an image that is dominated by a pointing hand, we use regression to determine where it points.  We collected a set of images to use for comparing performace on this task.  We evaluated the performance of two different features for the regression: convolutional neural networks and histograms of oriented gradients.  We also compared two different methods of performing the regression: K-nearest neighbors and least squares linear regression.  This work differs from many previous works in that it focuses on detecting the angle of a single finger in relation to the screen rather than on estimating hand poses or recognizing gestures.
+We present a method for detecting the direction of a pointing hand in an image for the purpose of creating a computer interface based on pointing.  Given an image that is dominated by a pointing hand, we use regression to determine where it points.  We collected a set of images to use for comparing performace on this task.  We evaluated the performance of two different features for the regression: convolutional neural networks and histograms of oriented gradients.  We also compared two different methods of performing the regression: k-Nearest Neighbors and least squares linear regression.  This work differs from many previous works in that it focuses on detecting the angle of a single finger in relation to the screen rather than on estimating hand poses or recognizing gestures.
 
 \end{abstract}
 
@@ -105,23 +107,23 @@ To perform the task of deciding where a hand is pointing, we first created featu
 
 \subsection{Convolutional neural networks}
 
-One source of features we evaluated was convolutional neural networks.  Convolutional neural networks have been used to get state of the art results in object recognition tasks such as the ILSVRC-2012 competition \cite{krizhevsky2012imagenet}.  They are made up of many layers of convolutional filters which are learned from training images, with each layer learning a higher representation of the image.   It has been found that the values of hidden units in the intermediate layers of a network provide good features for a variety of computer vision tasks, even tasks that the network was not trained for \cite{donahue2013decaf}.  For our features, we used the Caffe deep learning framework\cite{jia2014caffe} running a pretrained model architecture that is a variant of Krizhevsky's ILSVRC network\cite{krizhevsky2012imagenet}\footnote{The pretrained model is downloadable from the Caffe Model Zoo under the name 'BVLC Reference CaffeNet'}.  We ran their model and extracted the outputs of the final fully connected layer before the softmax layer, which gave us a 4096 dimensional feature vector.
+One source of features we evaluated was convolutional neural networks.  Convolutional neural networks have been used to get state of the art results in object recognition tasks such as the ILSVRC-2012 competition \cite{krizhevsky2012imagenet}.  They are made up of many layers of convolutional filters which are learned from training images, with each layer learning a higher representation of the image.   It has been found that the values of hidden units in the intermediate layers of a network provide good features for a variety of computer vision tasks, even tasks that the network was not trained for \cite{donahue2013decaf}.  For our features, we used the Caffe deep learning framework\cite{jia2014caffe} running a pretrained model architecture that is a variant of Krizhevsky's ILSVRC network\cite{krizhevsky2012imagenet}\footnote{The pretrained model is downloadable from the Caffe Model Zoo under the name 'BVLC Reference CaffeNet'}.  We ran their model and extracted the outputs of the final fully connected layer before the softmax layer, as shown in figure \ref{fig:cnn}, which gave us a 4096 dimensional feature vector.
 
-\begin{figure*}
+\begin{figure*}[b]
 	\begin{center}
 		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
 		\includegraphics[height=140px]{figures/cnn.png}
 	\end{center}
-	\caption{This shows a neural network architechture similar to the one used.  We used the values of the second layer from the right as our features.}
-	\label{fig:pointImages}
+	\caption{This shows a neural network architecture like the one we used.  We used the values of the layer indicated with an arrow as our features.  Figure source: \cite{krizhevsky2012presentation}}
+	\label{fig:cnn}
 \end{figure*}
 
 \subsection{Histogram of Gradients}
 
-We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
+We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures\cite{freeman1995orientation}. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
 
 \subsection{Regression}
-We experimented with several different regression models including k-Nearest Neighbors, and least squares linear regression. We found that an average of the output of k-nearest neighbors and linear regression worked best across a wide variety of data. We trained the k-nearest neighbors and linear regression models using the scikit-learn library\cite{scikit-learn}.  The models took in the features vectors from HOG and the neural networks and predicted a location. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
+We experimented with several different regression models including k-Nearest Neighbors and least squares linear regression.  We trained the k-Nearest Neighbors and linear regression models using the scikit-learn library\cite{scikit-learn}.  The models took in the features vectors from HOG and the neural networks and predicted a location. These locations were averaged together and fed into a smoothing algorithm to compute the final location.
 
 \subsection{Smoothing}
 In order to make the system more robust to noise, we both smooth the location and eliminate outliers. Let $x[n]$ be the location at frame $n$ and $u[n]$ be the location output from the k-NN and linear regression combination at frame $n$. Outliers are eliminated if
@@ -147,9 +149,7 @@ It is important to note that the data collected has inherent noise because peopl
 \section{Results}
 
 \subsection{Performance on test data}
-
-\subsubsection{Performance of Different Regressions}
-We evaluated the performance of both convolutional neural networks and HOG with k-Nearest Neighbors and Linear Regression. We used this data to aid us in selecting a regression method. The results from our tests our given both in the table below and in figure \ref{fig:hist}, which is a histogram of the error of the different classifiers. The error is the euclidean distance measured in pixels between the predicted point and the actual point.
+We evaluated the performance of both convolutional neural networks and HOG with k-Nearest Neighbors and Linear Regression. The results from our tests our given both in table \ref{table:meanErrors}, which gives the average error and in figure \ref{fig:hist}, which is a histogram of the errors of the different classifiers. The error is the euclidean distance measured in pixels between the predicted point and the actual point.
 
 \begin{table}
 	\caption{}
@@ -180,9 +180,16 @@ The k-Nearest Neighbors algorithm when applied to HOG yields the highest accurac
 		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
 		\includegraphics[width=0.9\linewidth]{figures/ClassifierErrorHist.png}
 	\end{center}
-	\caption{}
+	\caption{This histogram shows the frequency of different sized errors by different methods.  Errors are in pixels.}
 	\label{fig:hist}
 \end{figure*}
+
+\begin{figure}
+		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+		\includegraphics[width=0.9\linewidth]{figures/error_arrows.png}
+	\caption{This shows the errors made on a set of test images using HOG features and kNN regression.  Each arrow represents the error on a single image and points from the desired position to the position predicted by the system.}
+	\label{fig:hist}
+\end{figure}
 
 \begin{figure}[t]
 	\begin{center}
@@ -271,14 +278,16 @@ The k-Nearest Neighbors algorithm when applied to HOG yields the highest accurac
 \end{center}
 \FloatBarrier
 
-\subsection{Evaluation as a Computer Interaction Device}
+\subsection{Evaluation as a computer interaction device}
 	
-To test our system's effectiveness for computer interaction, we used the HOG feature based system to predict where a user was pointing at a computer screen.  We used the prediction to move a dot on the screen, which simulated the movement of a computer mouse.  Something about effectiveness fdjslfj
+To test our system's effectiveness for computer interaction, we used the HOG feature based system to predict where a user was pointing at a computer screen.  We used the prediction to move a dot on the screen, which simulated the movement of a computer mouse.
+
+We found that the system had had some issues with hands pointing towards certain locations, such as directly towards the camera, or very close to the edges of the screen.  Figures \ref{fig:pointErrors} and \ref{fig:close} demonstrate these problems.  We also experienced problems with robustness to slight repositioning of the arm and hand.  We concluded that the system will need to improve before it could be used as a computer input device.
 
 The time to process an image using convolutional neural networks was too high to allow for real time computer interaction, since each frame took several seconds to process.  Using a GPU to process frames would greatly increase the speed and should allow for the possibility of using these features in a real time system.
 
 \section{Conclusion}
-In this work, we explored detecting hand direction in images for interfacing with a computer.  We experimented with HOG as well as convolutional neural network features and tried several different regression methods.  To evaluate the effectiveness of different methods quantitatively, we tried our methods on a set of test images.  Using HOG features and a k-nearest neighbor regression, we achieved an average error of fjdsklfj pixels on these images.  Testing the system qualitatively, we found that the system was not very robust.
+In this work, we explored detecting hand direction in images for interfacing with a computer.  We experimented with HOG as well as convolutional neural network features and tried several different regression methods.  To evaluate the effectiveness of different methods quantitatively, we tried our methods on a set of test images.  Using HOG features and a k-Nearest Neighbor regression, we achieved an average error of 32 pixels on these images.  Testing the system qualitatively, we found that the system had difficulty distinguishing between some hand directions and would need to be more robust to be used for computer interaction.
 
 %-------------------------------------------------------------------------
 
