@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.4)  10 DEC 2014 03:28
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.4)  12 DEC 2014 15:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -195,6 +195,18 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (/usr/share/texlive/texmf-dist/tex/latex/was/gensymb.sty
 Package: gensymb 2003/07/02 v1.0 (WaS)
 )
+(/usr/share/texlive/texmf-dist/tex/latex/dblfloatfix/dblfloatfix.sty
+Package: dblfloatfix 2012/12/31 v1.0a (JAW)
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/fixltx2e.sty
+Package: fixltx2e 2006/09/13 v1.1m fixes to LaTeX
+LaTeX Info: Redefining \em on input line 420.
+LaTeX Info: The control sequence `\[' is already robust on input line 471.
+LaTeX Info: The control sequence `\]' is already robust on input line 472.
+)
+\@dblbotnum=\count108
+\c@dblbotnumber=\count109
+)
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 
@@ -253,13 +265,13 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen126
-\Hy@linkcounter=\count108
-\Hy@pagecounter=\count109
+\Hy@linkcounter=\count110
+\Hy@pagecounter=\count111
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count110
+\Hy@SavedSpaceFactor=\count112
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -273,7 +285,7 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks OFF on input line 4694.
-\c@Hy@tempcnt=\count111
+\c@Hy@tempcnt=\count113
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
@@ -281,7 +293,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen127
-\Fld@menulength=\count112
+\Fld@menulength=\count114
 \Field@Width=\dimen128
 \Fld@charsize=\dimen129
 Package hyperref Info: Hyper figures OFF on input line 6295.
@@ -293,17 +305,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count113
-\c@Item=\count114
-\c@Hfootnote=\count115
+\Hy@abspage=\count115
+\c@Item=\count116
+\c@Hfootnote=\count117
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count116
-\c@bookmark@seq@number=\count117
+\Fld@listcount=\count118
+\c@bookmark@seq@number=\count119
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
@@ -312,24 +324,28 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip48
 )
-(./paper.aux)
+(./paper.aux
+
+LaTeX Warning: Label `fig:hist' multiply defined.
+
+)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 30.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
@@ -344,16 +360,16 @@ Package color Info: Driver file: pdftex.def on input line 130.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count118
+\scratchcounter=\count120
 \scratchdimen=\dimen130
 \scratchbox=\box30
-\nofMPsegments=\count119
-\nofMParguments=\count120
+\nofMPsegments=\count121
+\nofMParguments=\count122
 \everyMPshowfont=\toks20
-\MPscratchCnt=\count121
+\MPscratchCnt=\count123
 \MPscratchDim=\dimen131
-\MPnumerator=\count122
-\makeMPintoPDFobject=\count123
+\MPnumerator=\count124
+\makeMPintoPDFobject=\count125
 \everyMPtoPDFconversion=\toks21
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -373,160 +389,196 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \celsius on input line 28.
-Package gensymb Info: Faking symbols for \degree and \celsius on input line 28.
+LaTeX Info: Redefining \celsius on input line 30.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 30.
 
 
 
 Package gensymb Warning: Not defining \perthousand.
 
-LaTeX Info: Redefining \ohm on input line 28.
-Package gensymb Info: Using \Omega for \ohm on input line 28.
+LaTeX Info: Redefining \ohm on input line 30.
+Package gensymb Info: Using \Omega for \ohm on input line 30.
 
 Package gensymb Warning: Not defining \micro.
 
 \AtBeginShipoutBox=\box31
 Package atbegshi Info: Package `everyshi' patched.
-Package hyperref Info: Link coloring OFF on input line 28.
+Package hyperref Info: Link coloring OFF on input line 30.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count124
+\c@section@level=\count126
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 30.
+LaTeX Info: Redefining \pageref on input line 30.
+LaTeX Info: Redefining \nameref on input line 30.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
-LaTeX Font Info:    Try loading font information for U+msa on input line 46.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 48.
+LaTeX Font Info:    Try loading font information for U+msa on input line 48.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 46.
+LaTeX Font Info:    Try loading font information for U+msb on input line 48.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 46.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 48.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 48.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 50.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ] [2]
+
+LaTeX Warning: File `figures/cnn.png' not found on input line 113.
+
+
+! Package pdftex.def Error: File `figures/cnn.png' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...degraphics[height=140px]{figures/cnn.png}
+                                                  
+Using draft setting for this image.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 142.
- [3]
-<figures/ClassifierErrorHist.png, id=78, 1175.1102pt x 615.7404pt>
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 115.
+
+LaTeX Warning: Citation `krizhevsky2012presentation' on page 3 undefined on inp
+ut line 115.
+
+
+LaTeX Warning: Citation `krizhevsky2012presentation' on page 3 undefined on inp
+ut line 115.
+
+<figures/ClassifierErrorHist.png, id=53, 1175.1102pt x 615.7404pt>
 File: figures/ClassifierErrorHist.png Graphic file (type png)
 
 <use figures/ClassifierErrorHist.png>
-Package pdftex.def Info: figures/ClassifierErrorHist.png used on input line 172
+Package pdftex.def Info: figures/ClassifierErrorHist.png used on input line 179
 .
 (pdftex.def)             Requested size: 447.16759pt x 234.30322pt.
 
-<figures/PointImage.png, id=80, 640.3925pt x 478.78876pt>
+
+LaTeX Warning: File `figures/error_arrows.png' not found on input line 187.
+
+
+! Package pdftex.def Error: File `figures/error_arrows.png' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.187 ...=0.9\linewidth]{figures/error_arrows.png}
+                                                  
+Using draft setting for this image.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<figures/PointImage.png, id=55, 640.3925pt x 478.78876pt>
 File: figures/PointImage.png Graphic file (type png)
 
 <use figures/PointImage.png>
-Package pdftex.def Info: figures/PointImage.png used on input line 182.
+Package pdftex.def Info: figures/PointImage.png used on input line 196.
 (pdftex.def)             Requested size: 106.71045pt x 79.77844pt.
 
-<figures/PointLeft2Image.png, id=81, 640.3925pt x 480.79625pt>
+<figures/PointLeft2Image.png, id=56, 640.3925pt x 480.79625pt>
 File: figures/PointLeft2Image.png Graphic file (type png)
 
 <use figures/PointLeft2Image.png>
-Package pdftex.def Info: figures/PointLeft2Image.png used on input line 187.
+Package pdftex.def Info: figures/PointLeft2Image.png used on input line 201.
 (pdftex.def)             Requested size: 106.71045pt x 80.11295pt.
 
-<figures/PointHOGedit.png, id=82, 477.785pt x 318.18875pt>
+<figures/PointHOGedit.png, id=57, 477.785pt x 318.18875pt>
 File: figures/PointHOGedit.png Graphic file (type png)
 
 <use figures/PointHOGedit.png>
-Package pdftex.def Info: figures/PointHOGedit.png used on input line 192.
+Package pdftex.def Info: figures/PointHOGedit.png used on input line 206.
 (pdftex.def)             Requested size: 106.71045pt x 71.06502pt.
 
-<figures/PointLeft2HOGedit.png, id=83, 478.78876pt x 319.1925pt>
+<figures/PointLeft2HOGedit.png, id=58, 478.78876pt x 319.1925pt>
 File: figures/PointLeft2HOGedit.png Graphic file (type png)
 
 <use figures/PointLeft2HOGedit.png>
-Package pdftex.def Info: figures/PointLeft2HOGedit.png used on input line 197.
+Package pdftex.def Info: figures/PointLeft2HOGedit.png used on input line 211.
 (pdftex.def)             Requested size: 106.71045pt x 71.13821pt.
 
-<figures/PointLeftImage.png, id=96, 642.4pt x 479.7925pt>
+<figures/PointLeftImage.png, id=71, 642.4pt x 479.7925pt>
 File: figures/PointLeftImage.png Graphic file (type png)
 
 <use figures/PointLeftImage.png>
-Package pdftex.def Info: figures/PointLeftImage.png used on input line 210.
+Package pdftex.def Info: figures/PointLeftImage.png used on input line 224.
 (pdftex.def)             Requested size: 149.05838pt x 111.32364pt.
 
-<figures/PointRightImage.png, id=97, 638.385pt x 479.7925pt>
+<figures/PointRightImage.png, id=72, 638.385pt x 479.7925pt>
 File: figures/PointRightImage.png Graphic file (type png)
 
 <use figures/PointRightImage.png>
-Package pdftex.def Info: figures/PointRightImage.png used on input line 215.
+Package pdftex.def Info: figures/PointRightImage.png used on input line 229.
 (pdftex.def)             Requested size: 149.05838pt x 112.02646pt.
 
-<figures/PointLeftHOG.png, id=98, 478.78876pt x 319.1925pt>
+<figures/PointLeftHOG.png, id=73, 478.78876pt x 319.1925pt>
 File: figures/PointLeftHOG.png Graphic file (type png)
 
 <use figures/PointLeftHOG.png>
-Package pdftex.def Info: figures/PointLeftHOG.png used on input line 221.
+Package pdftex.def Info: figures/PointLeftHOG.png used on input line 235.
 (pdftex.def)             Requested size: 149.05838pt x 99.37238pt.
 
-<figures/PointRightHOG.png, id=99, 478.78876pt x 316.18124pt>
+<figures/PointRightHOG.png, id=74, 478.78876pt x 316.18124pt>
 File: figures/PointRightHOG.png Graphic file (type png)
 
 <use figures/PointRightHOG.png>
-Package pdftex.def Info: figures/PointRightHOG.png used on input line 226.
+Package pdftex.def Info: figures/PointRightHOG.png used on input line 240.
 (pdftex.def)             Requested size: 149.05838pt x 98.4349pt.
-
-<figures/PointFarImage.png, id=112, 641.39626pt x 480.79625pt>
+ [3]
+<figures/PointFarImage.png, id=117, 641.39626pt x 480.79625pt>
 File: figures/PointFarImage.png Graphic file (type png)
 
 <use figures/PointFarImage.png>
-Package pdftex.def Info: figures/PointFarImage.png used on input line 238.
+Package pdftex.def Info: figures/PointFarImage.png used on input line 252.
 (pdftex.def)             Requested size: 149.05838pt x 111.7326pt.
 
-<figures/PointCloseImage.png, id=113, 642.4pt x 480.79625pt>
+<figures/PointCloseImage.png, id=118, 642.4pt x 480.79625pt>
 File: figures/PointCloseImage.png Graphic file (type png)
 
 <use figures/PointCloseImage.png>
-Package pdftex.def Info: figures/PointCloseImage.png used on input line 243.
+Package pdftex.def Info: figures/PointCloseImage.png used on input line 257.
 (pdftex.def)             Requested size: 149.05838pt x 111.55653pt.
 
-<figures/PointFarHOG.png, id=114, 480.79625pt x 317.185pt>
+<figures/PointFarHOG.png, id=119, 480.79625pt x 317.185pt>
 File: figures/PointFarHOG.png Graphic file (type png)
 
 <use figures/PointFarHOG.png>
-Package pdftex.def Info: figures/PointFarHOG.png used on input line 249.
+Package pdftex.def Info: figures/PointFarHOG.png used on input line 263.
 (pdftex.def)             Requested size: 149.05838pt x 98.336pt.
 
-<figures/PointCloseHOG.png, id=115, 478.78876pt x 319.1925pt>
+<figures/PointCloseHOG.png, id=120, 478.78876pt x 319.1925pt>
 File: figures/PointCloseHOG.png Graphic file (type png)
 
 <use figures/PointCloseHOG.png>
-Package pdftex.def Info: figures/PointCloseHOG.png used on input line 254.
+Package pdftex.def Info: figures/PointCloseHOG.png used on input line 268.
 (pdftex.def)             Requested size: 149.05838pt x 99.37238pt.
- [4 <./figures/PointImage.png (PNG copy)> <./figures/PointLeft2Image.png (PNG c
-opy)> <./figures/PointHOGedit.png (PNG copy)> <./figures/PointLeft2HOGedit.png 
-(PNG copy)>] [5 <./figures/ClassifierErrorHist.png> <./figures/PointLeftImage.p
-ng (PNG copy)> <./figures/PointRightImage.png (PNG copy)> <./figures/PointLeftH
-OG.png (PNG copy)> <./figures/PointRightHOG.png (PNG copy)>] [6 <./figures/Poin
-tFarImage.png (PNG copy)> <./figures/PointCloseImage.png (PNG copy)> <./figures
-/PointFarHOG.png (PNG copy)> <./figures/PointCloseHOG.png (PNG copy)>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-(./paper.bbl
+ [4 <./figures/ClassifierErrorHist.png>]
+[5 <./figures/PointImage.png (PNG copy)> <./figures/PointLeft2Image.png (PNG co
+py)> <./figures/PointHOGedit.png (PNG copy)> <./figures/PointLeft2HOGedit.png (
+PNG copy)>] [6 <./figures/PointLeftImage.png (PNG copy)> <./figures/PointRightI
+mage.png (PNG copy)> <./figures/PointLeftHOG.png (PNG copy)> <./figures/PointRi
+ghtHOG.png (PNG copy)> <./figures/PointFarImage.png (PNG copy)> <./figures/Poin
+tCloseImage.png (PNG copy)> <./figures/PointFarHOG.png (PNG copy)> <./figures/P
+ointCloseHOG.png (PNG copy)>] (./paper.bbl
 Underfull \hbox (badness 2012) in paragraph at lines 16--19
 []\OT1/ptm/m/n/9 A. Erol, G. Be-bis, M. Nico-lescu, R. D. Boyle, and
  []
@@ -536,32 +588,37 @@ Underfull \hbox (badness 1521) in paragraph at lines 51--56
 []\OT1/ptm/m/n/9 F. Pe-dregosa, G. Varo-quaux, A. Gram-fort, V. Michel,
  []
 
-[7
 
-]
 Underfull \hbox (badness 2158) in paragraph at lines 64--68
 []\OT1/ptm/m/n/9 M. Van den Bergh, E. Koller-Meier, F. Bosch[]e, and
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 280.
- [8
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 297.
+ [7
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 280.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 297.
  (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 280.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 280.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 280.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 297.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 297.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 297.
  ) 
 Here is how much of TeX's memory you used:
- 7544 strings out of 495028
- 113260 string characters out of 6181497
- 199738 words of memory out of 5000000
- 10581 multiletter control sequences out of 15000+600000
- 31790 words of font info for 70 fonts, out of 8000000 for 9000
+ 7595 strings out of 495028
+ 114124 string characters out of 6181497
+ 209297 words of memory out of 5000000
+ 10622 multiletter control sequences out of 15000+600000
+ 32305 words of font info for 72 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 42i,9n,40p,1136b,561s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,9n,40p,1170b,561s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -573,10 +630,10 @@ sfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 ></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (8 pages, 2434534 bytes).
+Output written on paper.pdf (7 pages, 2437838 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 154 compressed objects within 2 object streams
+ 211 PDF objects out of 1000 (max. 8388607)
+ 157 compressed objects within 2 object streams
  49 named destinations out of 1000 (max. 500000)
  66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
