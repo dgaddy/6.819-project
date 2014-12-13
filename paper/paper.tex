@@ -92,7 +92,7 @@ Several different methods of detecting fingers in images exist. Most involve fir
 
 For this work, we decided to focus on the problem of finding the orientation of a hand given a region where the hand is known to be instead of detecting the hand in a larger image.  To do this, we made several assumptions about the images we processed. First, we assume that the images have a clear background.  Although this assumption will often be broken in the target application of computer interaction, additional preprocessing could be done in a complete system to segment out the background of an image.  Methods for hand detection such as those described in the previous work section that use hand color, depth, or other cues could be used for this purpose.
 
-Second, we assume that the hand is roughly at a constant distance from the camera and at roughly the center of the image.  For the application of pointing at a computer screen, this assumption is fairly reasonable since a user's distance to the screen will usually vary by only a few feet at most and is likely to hold their hand directly in front of the screen to point at it.  To make the system more robust or for other applications, the location of the hand in an image could be detected using the methods described in previous work and our system could be passed only the region around a detected image.  Additionally, we could make our system more robust to distance and location by training on images that contained hands at different distances and locations.
+Second, we assume that the hand is roughly at a constant distance from the camera and at roughly the center of the image.  For the application of pointing at a computer screen, this assumption is fairly reasonable since a user's distance to the screen will usually vary by only a few feet at most and is likely to hold their hand directly in front of the screen to point at it.  To make the system more robust or for other applications, the location of the hand in an image could be detected using the methods described in previous work and our system could be passed only the region around a detected hand.  Additionally, we could make our system more robust to distance and location by training on images that contained hands at different distances and locations.
 
 \subsection{Data collection}
 
@@ -118,13 +118,13 @@ One source of features we evaluated was convolutional neural networks.  Convolut
 
 \subsection{Histogram of Gradients}
 
-We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures\cite{freeman1995orientation}. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the cells was 1.
+We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures\cite{freeman1995orientation}. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the entire HOG feature vector was 1.
 
 \subsection{Regression}
 We experimented with several different regression models including k-Nearest Neighbors and least squares linear regression.  We trained the k-Nearest Neighbors and linear regression models using the scikit-learn library\cite{scikit-learn}.  The models operated on the features vectors from HOG and the neural networks and predicted a location. The location predicted by k-Nearest Neighbors was ultimately used, and fed into a smoothing algorithm to compute the final location.
 
 \subsection{Smoothing}
-In order to make the system more robust to noise, we both eliminate outliers and smooth the location. Let $x[n]$ be the location at frame $n$ and $u[n]$ be the location output from the k-NN and linear regression combination at frame $n$. Outliers are eliminated if
+In order to make the system more robust to noise, we both eliminate outliers and smooth the location. Let $x[n]$ be the previously stored smoothed location at frame $n$ and $u[n]$ be the location output from the k-NN at frame $n$. Outliers are eliminated if
 \begin{equation}
 	\sqrt{\sum_{i=n-l}^{n}(u[n]-x[i])^2} \geq \epsilon
 \end{equation}
@@ -186,7 +186,7 @@ The k-Nearest Neighbors algorithm when applied to HOG yields the highest accurac
 		%\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
 		\includegraphics[width=0.9\linewidth]{figures/error_arrows.png}
 	\caption{This shows the errors made on a set of test images using HOG features and kNN regression.  Each arrow represents the error on a single image and points from the desired position to the position predicted by the system.}
-	\label{fig:hist}
+	\label{fig:error_arrows}
 \end{figure}
 
 \begin{figure}[t]
