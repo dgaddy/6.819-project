@@ -119,6 +119,7 @@ One source of features we evaluated was convolutional neural networks.  Convolut
 \subsection{Histogram of Gradients}
 
 We also evaluated the Histogram of Oriented Gradients (HOG) feature descriptor \cite{dalal2005histograms} as a means to detect the location and orientation of the pointing hand. This expands on work done by Freeman and Roth, who used gradients to detect hand gestures\cite{freeman1995orientation}. We used a variant of the R-HOG algorithm described by Dalal and Triggs in \cite{dalal2005histograms}. We divided the image into an 8 $\times$ 12 grid, yielding approximately 53 $\times$ 60 pixel cells. We divided orientations into 9 bins from $0\degree$-$360\degree$. In contrast to the block-normalization scheme used by Dalal and Triggs, all cells were scaled by the same value so the $l^2$ norm of the entire HOG feature vector was 1.
+We did this rather than use a block normalization scheme to avoid amplifying noise in the blank background. The hand is the primary object in the frame and we want to preserve this after computing HOG.
 
 \subsection{Regression}
 We experimented with several different regression models including k-Nearest Neighbors and least squares linear regression.  We trained the k-Nearest Neighbors and linear regression models using the scikit-learn library\cite{scikit-learn}.  The models operated on the features vectors from HOG and the neural networks and predicted a location. The location predicted by k-Nearest Neighbors was ultimately used, and fed into a smoothing algorithm to compute the final location.
@@ -144,10 +145,12 @@ For evaluation, we performed 15-fold cross validation, except the groups were ch
 
 It is important to note that the data collected has inherent noise because people are limited in precision for pointing at a location on a screen.  The location a user thinks they are pointing at may depend on the relative orientations of their eyes, their hands, and the screen.  For this reason, no system will be able to achieve perfect results on our data.
 
+\pagebreak
 \section{Results}
 
 \subsection{Performance on test data}
 We evaluated the performance of both convolutional neural networks and HOG with k-Nearest Neighbors and Linear Regression. The results from our tests our given both in Table \ref{table:meanErrors}, which gives the average error, and in figure \ref{fig:hist}, which is a histogram of the errors of the different classifiers. The error is the euclidean distance measured in pixels between the predicted point and the actual point.
+The k-Nearest Neighbors algorithm when applied to HOG yields the highest accuracy as can be seen from both the mean error in Table \ref{table:meanErrors} and the error distribution in Figure \ref{fig:hist}.
 
 \begin{table}
 	\caption{}
@@ -170,8 +173,6 @@ We evaluated the performance of both convolutional neural networks and HOG with 
 	\end{center}
 	\label{table:meanErrors}
 \end{table}
-
-The k-Nearest Neighbors algorithm when applied to HOG yields the highest accuracy as can be seen from both the mean error in Table \ref{table:meanErrors} and the error distribution in Figure \ref{fig:hist}. 
  
 \begin{figure*}
 	\begin{center}
@@ -284,9 +285,12 @@ We found that the system had had some issues with hands pointing towards certain
 
 The time to process an image using convolutional neural networks was too high to allow for real time computer interaction, since each frame took several seconds to process.  Using a GPU to process frames would greatly increase the speed and should allow for the possibility of using these features in a real time system.
 
+\newpage
 \section{Conclusion}
+
 In this work, we explored detecting hand direction in images for interfacing with a computer.  We experimented with HOG as well as convolutional neural network features and tried several different regression methods.  To evaluate the effectiveness of different methods quantitatively, we tried our methods on a set of test images.  Using HOG features and a k-Nearest Neighbor regression, we achieved an average error of 32 pixels on these images.  Testing the system qualitatively, we found that the system had difficulty distinguishing between some hand directions and would need to be more robust to be used for computer interaction.
 
+\newpage
 %-------------------------------------------------------------------------
 
 {\small
