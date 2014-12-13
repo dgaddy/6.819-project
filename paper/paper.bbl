@@ -35,6 +35,11 @@ A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton.
 \newblock In {\em Advances in neural information processing systems}, pages
   1097--1105, 2012.
 
+\bibitem{krizhevsky2012presentation}
+A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em Presentation to LSVRC Workshop}. ImageNet, 2012.
+
 \bibitem{lee2011vision}
 D.~Lee and S.~Lee.
 \newblock Vision-based finger action recognition by angle detection and contour
